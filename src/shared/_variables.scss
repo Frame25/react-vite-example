@@ -1,0 +1,63 @@
+$colors-map: (
+  primary: var(--blue),
+  danger: var(--red),
+  success: var(--green),
+  warning: var(--yellow),
+  blueLight: var(--blueLight),
+  blueLighten: var(--blueLighten),
+  white: white,
+  secondary: var(--grey600),
+  secondary2: var(--grey550),
+  disabled: var(--grey400),
+  greyLight: var(--grey250),
+  black: var(--black),
+);
+
+$sizes-map: (
+  xxs: var(--xxs),
+  xs: var(--xs),
+  sm: var(--sm),
+  md: var(--md),
+  lg: var(--lg),
+  xl: var(--xl),
+  xx: var(--xxl),
+);
+
+$margins-map: (
+  0: 0,
+  1: 5px,
+  2: 10px,
+  3: 15px,
+  4: 20px,
+  5: 30px,
+  6: 40px,
+  7: 50px,
+  8: 60px,
+  9: 90px,
+  10: 130px,
+  11: 180px,
+);
+
+$sm-screen: 450px;
+$md-screen: 676px;
+$lg-screen: 1180px;
+$xl-screen: 1440px;
+
+// use example:
+// @include transitions((color, background), .5s, ease);
+@mixin transitions(
+  $list: (
+    all,
+  ),
+  $time: 0.2s,
+  $easing: ease-out
+) {
+  $transitions: ();
+
+  @each $transition in $list {
+    $trans: unquote('#{$transition} #{$time} #{$easing}');
+    $transitions: append($transitions, $trans, comma);
+  }
+
+  transition: #{$transitions};
+}

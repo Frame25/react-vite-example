@@ -1,0 +1,68 @@
+@import 'shared/variables';
+
+.Setup2FA {
+  &__instructions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    grid-gap: 40px;
+    padding: 20px 20px 24px;
+    border-radius: 20px;
+    background-color: var(--grey160);
+
+    &Column {
+      &:nth-child(1) {
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          right: -20px;
+          display: block;
+          width: 1px;
+          height: 100%;
+          background-color: var(--grey170);
+
+          @media screen and (max-width: $sm-screen) {
+            display: none;
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: $sm-screen) {
+      grid-template-columns: 1fr;
+      gap: 0px;
+      grid-gap: 0px;
+    }
+  }
+
+  &__icon_round {
+    padding: 7px;
+    border-radius: 50%;
+    border: solid 1px var(--grey170);
+  }
+
+  &__qrCode {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    background: url('shared/assets/images/qr-placeholder.png') center/contain no-repeat;
+    filter: blur(4px);
+  }
+
+  &__googleAuthenticatorBlock,
+  &__roundIconsBlock {
+    padding: 30px;
+    margin-bottom: 20px;
+
+    @media screen and (max-width: $sm-screen) {
+      padding: 10px;
+    }
+  }
+
+  @media screen and (max-width: $sm-screen) {
+    padding: 100px 20px 50px;
+  }
+}

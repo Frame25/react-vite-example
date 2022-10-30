@@ -1,0 +1,91 @@
+@import 'shared/variables';
+
+.Button {
+  --color: white;
+  --hover-color: white;
+  --bg: var(--black);
+  --border: var(--black);
+  --hover-bg: var(--blue2);
+  --hover-border: var(--blue2);
+
+  display: inline-block;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  background-color: var(--bg);
+  color: var(--color);
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  user-select: none;
+  cursor: pointer;
+  @include transitions((color, background-color, border-color));
+
+  &:hover {
+    background-color: var(--hover-bg);
+    border-color: var(--hover-border);
+    color: var(--hover-color);
+  }
+
+  &_outlined {
+    --color: var(--black);
+    --hover-color: var(--blue2);
+    --bg: transparent;
+    --border: var(--black);
+    --hover-bg: transparent;
+    --hover-border: var(--blue2);
+  }
+
+  &_primary {
+    --bg: var(--blue);
+    --border: var(--blue);
+
+    &.Button_outlined {
+      --color: var(--blue);
+      --hover-color: var(--blue2);
+      --bg: transparent;
+      --border: var(--blue);
+      --hover-bg: transparent;
+      --hover-border: var(--blue2);
+    }
+  }
+
+  &_white {
+    --color: var(--black);
+    --hover-color: var(--blue2);
+    --bg: white;
+    --border: var(--black);
+    --hover-bg: white;
+    --hover-border: var(--blue2);
+  }
+
+  &_secondary {
+    --color: var(--blue);
+    --hover-color: var(--blue2);
+    --bg: var(--grey180);
+    --border: var(--grey180);
+    --hover-bg: var(--grey200);
+    --hover-border: var(--grey200);
+
+    &.Button_outlined {
+      --color: var(--blue);
+      --hover-color: var(--blue2);
+      --bg: transparent;
+      --border: var(--grey180);
+      --hover-bg: transparent;
+      --hover-border: var(--grey200);
+    }
+  }
+
+  &_disabled {
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+    opacity: 0.7;
+  }
+
+  &_sm {
+    padding: 9px 18px;
+    font-size: 12px;
+    border-radius: 9px;
+  }
+}

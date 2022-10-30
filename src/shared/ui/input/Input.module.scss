@@ -1,0 +1,61 @@
+@import 'shared/variables';
+
+.Input {
+  --border: var(--grey170);
+  --border-active: var(--blue);
+
+  display: flex;
+  flex-direction: column;
+
+  &_inline {
+    display: inline-flex;
+  }
+
+  &_horizontal {
+    flex-direction: row;
+  }
+}
+
+.Input__label {
+  margin-bottom: 10px;
+}
+
+.Input__wrapper {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: solid 1px var(--border);
+  background-color: white;
+  @include transitions((border-color));
+}
+
+.Input_focused {
+  border-color: var(--border-active);
+}
+
+.Input__input {
+  flex-grow: 1;
+  color: var(--black);
+  outline: none !important;
+  border: none !important;
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: var(--grey250);
+    user-select: none;
+  }
+}
+
+.Input__error {
+  margin-top: 10px;
+  color: var(--red);
+  text-align: right;
+}
+
+.Input__slotAfter {
+  display: inline-flex;
+}

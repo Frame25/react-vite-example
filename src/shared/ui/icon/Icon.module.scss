@@ -1,0 +1,26 @@
+@import 'shared/variables';
+
+.Icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@each $key, $val in $sizes-map {
+  .Icon_#{'' + $key} {
+    width: $val;
+    height: $val;
+  }
+}
+
+@each $key, $val in $colors-map {
+  .Icon_#{'' + $key} {
+    fill: $val;
+  }
+}

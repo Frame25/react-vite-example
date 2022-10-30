@@ -1,0 +1,8 @@
+dist
+public
+node_modules
+#.eslintrc.js
+*.config.js
+*.config.ts
+#*.test.ts
+#*.test.tsx
