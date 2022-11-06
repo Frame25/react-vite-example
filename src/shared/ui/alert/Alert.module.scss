@@ -1,0 +1,53 @@
+.Alert {
+  position: relative;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 2px 2px 17px rgba(138, 150, 168, 0.12), -2px -3px 21px rgba(138, 150, 168, 0.12);
+  background-color: white;
+
+  &_animated {
+    animation: appear 0.3s ease-in forwards;
+  }
+
+  &__title {
+    margin-bottom: 8px;
+    padding-right: 20px;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  &__content {
+    font-size: 14px;
+  }
+  &__close {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+  }
+
+  &_success {
+    background-color: var(--green);
+  }
+  &_danger {
+    background-color: var(--red);
+    color: white;
+
+    svg {
+      fill: white;
+    }
+  }
+  &_warning {
+    background-color: var(--yellow);
+  }
+  &_info {
+    background-color: var(--blueLight);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

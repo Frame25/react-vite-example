@@ -1,6 +1,7 @@
 @import 'shared/variables';
 
-.Button {
+.Button,
+a.Button {
   --color: white;
   --hover-color: white;
   --bg: var(--black);
@@ -20,6 +21,10 @@
   user-select: none;
   cursor: pointer;
   @include transitions((color, background-color, border-color));
+
+  &:visited {
+    color: var(--color);
+  }
 
   &:hover {
     background-color: var(--hover-bg);

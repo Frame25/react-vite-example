@@ -1,8 +1,9 @@
 import cn from 'classnames';
 import {useFormik} from 'formik';
 import {observer} from 'mobx-react-lite';
-import {useEffect} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
+
+import {RoutePath} from 'app/router';
 
 import {SIGNUP_VALIDATION_SCHEME} from 'pages/auth/lib/validation';
 
@@ -34,15 +35,9 @@ export const SignUp = observer(() => {
         userModel.login(response.result.user, response.result.token);
       }
 
-      navigate('/auth/setup-2fa');
+      navigate(RoutePath.Setup2FA);
     },
   });
-
-  useEffect(() => {
-    if (userModel.token) {
-      navigate('/', {replace: true});
-    }
-  }, [navigate]);
 
   return (
     <Container alignCenter column className={styles.SignUpPage}>

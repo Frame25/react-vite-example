@@ -1,6 +1,8 @@
 import cn from 'classnames';
 import {InputHTMLAttributes, ReactNode, useState, forwardRef, ForwardedRef, useRef, useEffect} from 'react';
 
+import {Icon} from 'shared/ui/icon';
+
 import styles from './Input.module.scss';
 
 export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -11,6 +13,7 @@ export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   slotBefore?: string | ReactNode;
   slotAfter?: string | ReactNode;
   onPasteButtonClick?: (clipboardValue: string) => void;
+  onReset?: (e: any) => void;
 };
 
 export const Input = forwardRef(
@@ -26,6 +29,7 @@ export const Input = forwardRef(
       slotAfter,
       slotBefore,
       onPasteButtonClick,
+      onReset,
       ...rest
     }: InputProps,
     ref?: ForwardedRef<HTMLLabelElement>,
@@ -76,6 +80,9 @@ export const Input = forwardRef(
 
           {slotAfter && <span className={styles.Input__slotAfter}>{slotAfter}</span>}
           {pasteButtonRef.current}
+          {typeof onReset === 'function' && (
+            <Icon className="cursor-pointer" color={value ? undefined : 'secondary2'} icon="x" onClick={onReset} />
+          )}
         </span>
 
         {error && <span className={styles.Input__error}>{typeof error === 'string' ? error : 'Error'}</span>}

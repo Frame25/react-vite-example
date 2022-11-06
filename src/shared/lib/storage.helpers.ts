@@ -49,3 +49,26 @@ export function useSessionStorage(key: string, initialValue: any) {
 
   return [storedValue, setValue];
 }
+
+export function saveEncodedDataToStorage(key: string, value: any, storage = window.localStorage) {
+  try {
+    const str = JSON.stringify(value);
+    const encoded = window.btoa(encodeURIComponent(str));
+
+    storage.setItem(key, encoded);
+  } catch (e) {}
+}
+
+export function getEncodedDataFromStorage(key: string, storage = window.localStorage) {
+  try {
+    const encoded = storage.getItem(key);
+
+    if (encoded) {
+      const str = decodeURIComponent(window.atob(encoded));
+
+      return JSON.parse(str);
+    }
+  } catch (e) {}
+
+  return null;
+}

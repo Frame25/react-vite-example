@@ -2,6 +2,8 @@ import './Home.scss';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+import {RoutePath} from 'app/router';
+
 import {Icon} from 'shared/ui/icon';
 
 export const Home = () => {
@@ -13,7 +15,7 @@ export const Home = () => {
         <p>
           Edit <code>src/Home.tsx</code> and save to reload.
         </p>
-        <Link to={'login'}>Login</Link>
+        <Link to={RoutePath.Login}>Login</Link>
       </header>
     </div>
   );

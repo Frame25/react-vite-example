@@ -56,7 +56,7 @@ It is easy to install via `npm install -g pnpm`.
 - `pnpm run build`
 - Done: you have `/dist` folder with `/dist/index.html`, it should be served as `/`
   and Nginx / Apache / Framework should redirect all routes to `/`, because frontend uses
-  SPA with ReactRouter.
+  SPA with ReactRouter. You may exclude API from this redirects with prefix, ex. `/api/v1/`.
 
 ## Testing
 

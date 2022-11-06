@@ -26,6 +26,7 @@ const GoogleAuthenticatorIcon = lazy(() => resolveLazySVG(import('shared/assets/
 const GooglePlayIcon = lazy(() => resolveLazySVG(import('shared/assets/icons/google-play.svg')));
 const PhotoCameraIcon = lazy(() => resolveLazySVG(import('shared/assets/icons/photo-camera.svg')));
 const PlusIcon = lazy(() => resolveLazySVG(import('shared/assets/icons/plus.svg')));
+const X = lazy(() => resolveLazySVG(import('shared/assets/icons/x.svg')));
 
 export type IconName =
   | 'eye'
@@ -37,7 +38,8 @@ export type IconName =
   | 'plus'
   | 'logo'
   | 'check-base'
-  | 'arrow';
+  | 'arrow'
+  | 'x';
 
 export type IconColor =
   | 'danger'
@@ -48,8 +50,8 @@ export type IconColor =
   | 'blueLighten'
   | 'white'
   | 'secondary'
+  | 'secondary2'
   | 'disabled'
-  | 'disabled2'
   | 'greyLight'
   | 'black';
 
@@ -66,6 +68,7 @@ const icons: Record<string, FunctionComponent> = {
   logo: Logo,
   'check-base': CheckBase,
   arrow: Arrow,
+  x: X,
 };
 
 export type IconProps = Omit<SVGProps<SVGSVGElement>, 'color'> & {
@@ -94,8 +97,8 @@ const iconColors = {
   blueLighten: styles.Icon_blueLighten,
   white: styles.Icon_white,
   secondary: styles.Icon_secondary,
+  secondary2: styles.Icon_secondary2,
   disabled: styles.Icon_disabled,
-  disabled2: styles.Icon_disabled2,
   greyLight: styles.Icon_greyLight,
   black: styles.Icon_black,
 };

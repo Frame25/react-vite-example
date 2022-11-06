@@ -1,17 +1,20 @@
 import cn from 'classnames';
 import {useFormik} from 'formik';
 import {observer} from 'mobx-react-lite';
-import {useEffect, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {Transition} from 'react-transition-group';
+
+import {RoutePath} from 'app/router';
 
 import {LOGIN_VALIDATION_SCHEME, PARTIAL_LOGIN_VALIDATION_SCHEME} from 'pages/auth/lib/validation';
 
 import {authApi} from 'entities/authApi';
 import {userModel} from 'entities/user';
 
+import {USER_TEMP_LOGIN_DATA} from 'shared/constants';
 import {ApiError, ErrorCodes} from 'shared/lib/errors';
-import {useMemorizedRoute} from 'shared/lib/router.helpers';
+import {saveEncodedDataToStorage} from 'shared/lib/storage.helpers';
 import {Button} from 'shared/ui/button/Button';
 import {Container} from 'shared/ui/container/Container';
 import {Input, InputPassword} from 'shared/ui/input';
@@ -20,26 +23,21 @@ import styles from './Login.module.scss';
 
 export const Login = observer(() => {
   const navigate = useNavigate();
-  const {getMemoRoute} = useMemorizedRoute();
   const [isReadyForTwoFA, setIsReadyForTwoFA] = useState(false);
   const formik = useFormik({
-    initialValues: isReadyForTwoFA
-      ? {
-          email: '',
-          password: '',
-          twoFactorPin: '',
-        }
-      : {
-          email: '',
-          password: '',
-        },
+    initialValues: {
+      email: '',
+      password: '',
+      twoFactorPin: '',
+    },
     validationSchema: isReadyForTwoFA ? LOGIN_VALIDATION_SCHEME : PARTIAL_LOGIN_VALIDATION_SCHEME,
     async onSubmit({email, password, twoFactorPin}) {
       if (isReadyForTwoFA && twoFactorPin) {
         const response = await authApi.login({email, password, 'two-factor-pin': twoFactorPin});
 
         if (response?.result?.token) {
-          navigate(getMemoRoute());
+          userModel.login(response.result.user, response.result.token);
+          navigate(RoutePath.Root);
         }
       } else {
         const response = await authApi.partialLogin({email, password}).catch((err: ApiError) => {
@@ -52,19 +50,15 @@ export const Login = observer(() => {
 
         if (response?.result?.user && !response.result.user.two_factor_paired) {
           userModel.login(response.result.user, response.result.token);
-          navigate('/auth/setup-2fa');
+          navigate(RoutePath.Setup2FA);
+
+          saveEncodedDataToStorage(USER_TEMP_LOGIN_DATA, {email, password}, window.sessionStorage);
         }
       }
     },
   });
 
   const transitionRef = useRef(null);
-
-  useEffect(() => {
-    if (userModel.token) {
-      navigate(getMemoRoute());
-    }
-  }, [getMemoRoute, navigate]);
 
   return (
     <Container alignCenter column className={styles.LoginPage}>

@@ -2,11 +2,14 @@ import {useFormik} from 'formik';
 import {useEffect, useMemo} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 
+import {RoutePath} from 'app/router';
+
 import {UPDATE_PASSWORD_VALIDATION_SCHEME} from 'pages/auth/lib/validation';
 
 import {authApi} from 'entities/authApi';
 
 import {ApiError, ErrorCodes} from 'shared/lib/errors';
+import {notifications} from 'shared/lib/notification';
 import {Button} from 'shared/ui/button';
 import {Container} from 'shared/ui/container';
 import {InputPassword} from 'shared/ui/input';
@@ -18,16 +21,8 @@ export const ResetPassword = () => {
   const navigate = useNavigate();
   const [token, email] = useMemo(() => {
     const search = new URLSearchParams(location.search);
-    const result: Array<string | null> = [null, null];
 
-    if (search.has('token')) {
-      result[0] = search.get('token');
-    }
-    if (search.has('email')) {
-      result[1] = search.get('email');
-    }
-
-    return result;
+    return [search.get('token'), search.get('email')];
   }, [location]);
   const formik = useFormik({
     initialValues: {
@@ -39,14 +34,21 @@ export const ResetPassword = () => {
       if (token && email) {
         const response = await authApi.updatePasswordAfterReset({password, email, token}).catch((e: ApiError) => {
           if (e?.code === ErrorCodes.PASSWORD_CHANGE_EXCEPTION) {
-            // TODO: handle token error
+            notifications.error({
+              title: 'Token error',
+              content:
+                'Reset link is incorrect. Can not change password. Click this notification to start process again.',
+              onClick() {
+                navigate(RoutePath.ForgotPassword);
+              },
+            });
           }
 
           return null;
         });
 
         if (response) {
-          navigate('/auth/login');
+          navigate(RoutePath.Login);
         }
       }
     },
@@ -54,9 +56,15 @@ export const ResetPassword = () => {
 
   useEffect(() => {
     if (!email || !token) {
-      //TODO: alert, that incorrect reset link
+      notifications.error({
+        title: 'Reset link is incorrect',
+        content: 'Click this notification to start process again.',
+        onClick() {
+          navigate(RoutePath.ForgotPassword);
+        },
+      });
     }
-  }, [email, token]);
+  }, [email, token, navigate]);
 
   return (
     <Container size="sm">

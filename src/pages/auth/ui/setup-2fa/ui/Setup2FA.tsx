@@ -1,12 +1,17 @@
 import cn from 'classnames';
 import {useFormik} from 'formik';
 import {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 import {userModel} from 'entities';
 
+import {RoutePath} from 'app/router';
+
 import {authApi} from 'entities/authApi';
 
+import {USER_TEMP_LOGIN_DATA} from 'shared/constants';
+import {notifications} from 'shared/lib/notification';
+import {getEncodedDataFromStorage} from 'shared/lib/storage.helpers';
 import {Button} from 'shared/ui/button';
 import {Container} from 'shared/ui/container/Container';
 import {Divider} from 'shared/ui/divider';
@@ -18,6 +23,7 @@ import styles from './Setup2FA.module.scss';
 
 export const Setup2FA = () => {
   const [isConnected, setIsConnected] = useState(false);
+  const navigate = useNavigate();
   const [qrLink, setQrLink] = useState('');
   const formik = useFormik({
     initialValues: {twoFactorPin: ''},
@@ -27,11 +33,34 @@ export const Setup2FA = () => {
       }
     },
     async onSubmit({twoFactorPin}) {
-      const response = await authApi.loginOnlyTwoFactor({'two-factor-pin': twoFactorPin});
+      // const response = await authApi.loginOnlyTwoFactor({'two-factor-pin': twoFactorPin});
+      const savedLoginData = getEncodedDataFromStorage(USER_TEMP_LOGIN_DATA, window.sessionStorage);
+
+      if (!savedLoginData) {
+        notifications.error({
+          title: 'Error with 2FA',
+          content: "We've got error with your data. Please, click this alert to start again from login page.",
+          closable: true,
+          onClick() {
+            navigate(RoutePath.Login);
+          },
+        });
+
+        return false;
+      }
+
+      const {email, password} = savedLoginData;
+      const response = await authApi.login({email, password, 'two-factor-pin': twoFactorPin});
 
       if (response?.result?.token) {
-        userModel.login(response.result.user, response.result.token);
-        setIsConnected(true);
+        await userModel.login(response.result.user, response.result.token);
+        notifications.success({
+          title: 'Everithing great!',
+          content: 'Authenticator is connected, You are logined in.',
+          closable: true,
+        });
+        navigate(RoutePath.Root);
+        // TODO: setIsConnected(true);
       }
     },
   });
@@ -76,13 +105,19 @@ export const Setup2FA = () => {
                         <Text className="mr-2" color="secondary" tag="div">
                           Available on{' '}
                         </Text>
-                        {/* TODO: add stores links and remove eslint-disable */}
-                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                        <a className="mr-1" href="#" target="_blank">
+                        <a
+                          className="mr-1"
+                          href="https://apps.apple.com/us/app/google-authenticator/id388497605"
+                          rel="noreferrer"
+                          target="_blank"
+                        >
                           <Icon icon="appstore" />
                         </a>
-                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                        <a href="#" target="_blank">
+                        <a
+                          href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2"
+                          rel="noreferrer"
+                          target="_blank"
+                        >
                           <Icon icon="google-play" />
                         </a>
                       </Container>

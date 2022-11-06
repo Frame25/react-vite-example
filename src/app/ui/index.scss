@@ -1,6 +1,7 @@
 @import 'shared/_variables';
 @import 'fonts';
 @import '/node_modules/modern-normalize/modern-normalize.css';
+@import 'shared/ui/button/Button.module.scss';
 
 :root {
   --black: #081b27;
@@ -29,8 +30,10 @@
   --yellowDarkRGB: 148, 95, 8;
   --yellowLight: #fdf0d9;
   --yellowLightRGB: 253, 240, 217;
-  --red: #e0335d;
-  --redRGB: 224, 51, 93;
+  --red: #dd3730;
+  --redRGB: 221, 55, 48;
+  --red2: #e0335d;
+  --red2RGB: 224, 51, 93;
   --redDark: #940024;
   --redDarkRGB: 148, 0, 36;
   --redLight: #ffc7d4;
@@ -176,6 +179,11 @@ a {
   color: var(--blue);
 }
 
+.cursor-pointer {
+  cursor: pointer;
+  user-select: none;
+}
+
 [class*='element-fade'] {
   transition: all 200ms ease-out;
 }
@@ -189,3 +197,94 @@ a {
 .element-fade-exiting {
   opacity: 1;
 }
+
+// .button-like,
+// a.button-like {
+// --color: white;
+// --hover-color: white;
+// --bg: var(--black);
+// --border: var(--black);
+// --hover-bg: var(--blue2);
+// --hover-border: var(--blue2);
+
+// display: inline-block;
+// padding: 12px;
+// border-radius: 12px;
+// border: 2px solid var(--border);
+// background-color: var(--bg);
+// color: var(--color);
+// text-align: center;
+// font-size: 16px;
+// font-weight: 600;
+// user-select: none;
+// cursor: pointer;
+// @include transitions((color, background-color, border-color));
+
+// &:hover {
+//   background-color: var(--hover-bg);
+//   border-color: var(--hover-border);
+//   color: var(--hover-color);
+// }
+
+// &_outlined {
+//   --color: var(--black);
+//   --hover-color: var(--blue2);
+//   --bg: transparent;
+//   --border: var(--black);
+//   --hover-bg: transparent;
+//   --hover-border: var(--blue2);
+// }
+
+// &_primary {
+//   --bg: var(--blue);
+//   --border: var(--blue);
+
+//   &.Button_outlined {
+//     --color: var(--blue);
+//     --hover-color: var(--blue2);
+//     --bg: transparent;
+//     --border: var(--blue);
+//     --hover-bg: transparent;
+//     --hover-border: var(--blue2);
+//   }
+// }
+
+// &_white {
+//   --color: var(--black);
+//   --hover-color: var(--blue2);
+//   --bg: white;
+//   --border: var(--black);
+//   --hover-bg: white;
+//   --hover-border: var(--blue2);
+// }
+
+// &_secondary {
+//   --color: var(--blue);
+//   --hover-color: var(--blue2);
+//   --bg: var(--grey180);
+//   --border: var(--grey180);
+//   --hover-bg: var(--grey200);
+//   --hover-border: var(--grey200);
+
+//   &.Button_outlined {
+//     --color: var(--blue);
+//     --hover-color: var(--blue2);
+//     --bg: transparent;
+//     --border: var(--grey180);
+//     --hover-bg: transparent;
+//     --hover-border: var(--grey200);
+//   }
+// }
+
+// &_disabled {
+//   pointer-events: none !important;
+//   cursor: not-allowed !important;
+//   opacity: 0.7;
+// }
+
+// &_sm {
+//   padding: 9px 18px;
+//   font-size: 12px;
+//   border-radius: 9px;
+// }
+// }

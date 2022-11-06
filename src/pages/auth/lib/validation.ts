@@ -1,14 +1,6 @@
 import {boolean, object, string, ref} from 'yup';
 
-const emailValidation = string().email('Incorrect email').required('Email is required');
-const passwordValidation = string()
-  .min(8, 'Too short password')
-  .max(30, 'Too long password')
-  .required('Password is required');
-const twoFactorPinValidation = string()
-  .min(6, 'Invalid 2FA code')
-  .max(6, 'Invalid 2FA code')
-  .required('2FA code is required');
+import {emailValidation, passwordValidation, twoFactorPinValidation} from 'shared/lib/validation';
 
 export const PARTIAL_LOGIN_VALIDATION_SCHEME = object().shape({
   email: emailValidation,

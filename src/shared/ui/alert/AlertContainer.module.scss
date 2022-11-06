@@ -1,0 +1,16 @@
+.AlertContainer {
+  position: absolute;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  padding: 20px;
+
+  &_bottom {
+    top: unset;
+    bottom: 0;
+  }
+
+  &__alertsList {
+    width: 300px;
+  }
+}

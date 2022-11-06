@@ -4,7 +4,6 @@ import {userModel} from 'entities';
 
 import {ApiError} from './errors';
 
-// @ts-ignore // eslint-disable-next-line
 const apiUrl = import.meta.env?.VITE_API_URL || '/missing-api-url-in-env/';
 
 export const fetcher = ky.extend({

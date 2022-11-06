@@ -20,18 +20,30 @@ const ResetPassword = lazy(() => import('pages/auth').then((r) => ({default: r.R
 const Manager = lazy(() => import('pages/manager').then((r) => ({default: r.Manager})));
 const Invite = lazy(() => import('pages/manager').then((r) => ({default: r.Invite})));
 
+export enum RoutePath {
+  Root = '/',
+  Auth = '/auth',
+  Login = '/auth/login',
+  Setup2FA = '/auth/setup-2fa',
+  SignUp = '/auth/sign-up',
+  ForgotPassword = '/auth/forgot-password',
+  ResetPassword = '/auth/reset-password',
+  Manager = '/manager',
+  Invite = '/manager/invite',
+}
+
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: RoutePath.Root,
     element: <Root />,
     errorElement: <PageNotFound />,
     children: [
       {
-        path: '/',
+        path: RoutePath.Root,
         element: <Home />,
       },
       {
-        path: '/auth',
+        path: RoutePath.Auth,
         element: (
           <Suspense>
             <Auth />
@@ -39,7 +51,7 @@ export const router = createBrowserRouter([
         ),
         children: [
           {
-            path: 'login',
+            path: RoutePath.Login,
             element: (
               <Suspense>
                 <Login />
@@ -47,7 +59,7 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: 'setup-2fa',
+            path: RoutePath.Setup2FA,
             element: (
               <Suspense>
                 <Setup2FA />
@@ -55,7 +67,7 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: 'sign-up',
+            path: RoutePath.SignUp,
             element: (
               <Suspense>
                 <SignUp />
@@ -63,7 +75,7 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: 'forgot-password',
+            path: RoutePath.ForgotPassword,
             element: (
               <Suspense>
                 <ForgotPassword />
@@ -71,7 +83,7 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: 'reset-password',
+            path: RoutePath.ResetPassword,
             element: (
               <Suspense>
                 <ResetPassword />
@@ -81,7 +93,7 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: '/manager',
+        path: RoutePath.Manager,
         element: (
           <Suspense>
             <Manager />
@@ -89,7 +101,7 @@ export const router = createBrowserRouter([
         ),
         children: [
           {
-            path: 'invite',
+            path: RoutePath.Invite,
             element: (
               <Suspense>
                 <PermissionGuard roles={[Role.ADMIN]}>
@@ -105,10 +117,11 @@ export const router = createBrowserRouter([
 ]);
 
 export const TITLES_TO_ROUTES: Record<string, string> = {
-  '/': 'B2B Off-ramp',
-  '/auth/login': 'Login',
-  '/auth/setup-2fa': 'Setup 2FA',
-  '/auth/sign-up': 'Sign up',
-  '/auth/forgot-password': 'Reset password',
-  '/auth/reset-password': 'Reset password',
+  [RoutePath.Root]: 'B2B Off-ramp',
+  [RoutePath.Login]: 'Login',
+  [RoutePath.Setup2FA]: 'Setup 2FA',
+  [RoutePath.SignUp]: 'Sign up',
+  [RoutePath.ResetPassword]: 'Reset password',
+  [RoutePath.ForgotPassword]: 'Reset password',
+  [RoutePath.Invite]: 'Invite new user',
 };
